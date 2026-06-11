@@ -26,12 +26,15 @@ pip install "git+https://github.com/Sandeep2325/UgcSlideShowAIAgent.git"
 1. **Node.js 18+** — the video engine (Remotion) is Node-based, so this is required even when you
    call it from Python. Install from https://nodejs.org. *(The package bundles all the Node code and
    runs `npm install` for you on first use — you don't manage it.)*
-2. **Two API keys** as environment variables:
-   ```bash
-   export ANTHROPIC_API_KEY=sk-ant-...   # console.anthropic.com  (plans the scenes)
-   export KIE_AI_API_KEY=...             # kie.ai                 (NanoBanana images)
+2. **Two API keys.** Pass them **straight to the function** (easiest):
+   ```python
+   make_slideshow("your topic",
+                  anthropic_api_key="sk-ant-...",   # console.anthropic.com  (plans the scenes)
+                  kie_api_key="...")                # kie.ai                 (NanoBanana images)
    ```
-   You can also pass them per call: `make_slideshow(..., env={"ANTHROPIC_API_KEY": "...", "KIE_AI_API_KEY": "..."})`.
+   …or set them as environment variables (`ANTHROPIC_API_KEY`, `KIE_AI_API_KEY`) or in a `.env` file.
+   Keys passed to the function take priority. **Don't hard-code keys in committed source** — read
+   them from your own config/secrets and pass the values in.
 
 > First call after install copies the bundled Node runtime to `~/.slideshowagent/` and runs
 > `npm install` there once (~1 min). Override with `SLIDESHOWAGENT_CACHE`, or point at an existing
@@ -52,6 +55,8 @@ result = make_slideshow(
     character=None,                    # optional: keep the same person across every slide
     style=None,                        # optional: match a look (image OR video, path or URL)
     render=True,                       # True → render the mp4; False → just generate + wire Studio
+    anthropic_api_key="sk-ant-...",    # or set ANTHROPIC_API_KEY env var
+    kie_api_key="...",                 # or set KIE_AI_API_KEY env var
 )
 
 print(result["video"])                 # absolute path to the .mp4 (None if render=False)
@@ -63,7 +68,8 @@ for s in result["scenes"]:
 
 ```python
 make_slideshow(topic, *, scenes=6, captions="minimal", product=None, character=None,
-               style=None, render=True, env=None, timeout=1800) -> dict
+               style=None, render=True, anthropic_api_key=None, kie_api_key=None,
+               env=None, timeout=1800) -> dict
 ```
 
 **Returns** `{jobId, topic, title, captionStyle, scriptPath, scenes[], images[], video, studioCommand}`.

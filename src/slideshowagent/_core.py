@@ -97,19 +97,28 @@ def make_slideshow(
     character: Optional[str] = None,
     style: Optional[str] = None,
     render: bool = True,
+    anthropic_api_key: Optional[str] = None,
+    kie_api_key: Optional[str] = None,
     env: Optional[dict] = None,
     timeout: int = 1800,
 ) -> dict:
     """Generate a UGC slideshow and return a result dict.
 
-    See README "Use from Python" for the full argument reference. Returns a dict with keys:
-    jobId, topic, title, captionStyle, scriptPath, scenes[], images[], video, studioCommand.
-    Raises SlideshowError on failure.
+    Pass your keys directly with `anthropic_api_key=` and `kie_api_key=` (or set them as environment
+    variables / a .env file). Keys passed here take priority. See README "Use from Python" for the
+    full argument reference. Returns a dict with keys: jobId, topic, title, captionStyle, scriptPath,
+    scenes[], images[], video, studioCommand. Raises SlideshowError on failure.
     """
     if captions not in CAPTION_STYLES:
         raise SlideshowError(f"captions must be one of {CAPTION_STYLES}, got {captions!r}")
     if shutil.which("node") is None:
         raise SlideshowError("Node.js not found on PATH — install Node 18+ (https://nodejs.org)")
+
+    keys = {}
+    if anthropic_api_key:
+        keys["ANTHROPIC_API_KEY"] = anthropic_api_key
+    if kie_api_key:
+        keys["KIE_AI_API_KEY"] = kie_api_key
 
     project = runtime_dir()
     agent = project / "slideshow-agent.mjs"
@@ -125,7 +134,7 @@ def make_slideshow(
     if render:
         cmd += ["--render"]
 
-    run_env = {**os.environ, **(env or {})}
+    run_env = {**os.environ, **keys, **(env or {})}
     proc = subprocess.run(
         cmd, cwd=str(project), env=run_env,
         capture_output=True, text=True, timeout=timeout,

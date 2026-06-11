@@ -41,6 +41,8 @@ def make_slideshow(
     character: Optional[str] = None,
     style: Optional[str] = None,
     render: bool = True,
+    anthropic_api_key: Optional[str] = None,
+    kie_api_key: Optional[str] = None,
     project_dir: Optional[str] = None,
     env: Optional[dict] = None,
     timeout: int = 1800,
@@ -91,7 +93,12 @@ def make_slideshow(
     if render:
         cmd += ["--render"]
 
-    run_env = {**os.environ, **(env or {})}
+    keys = {}
+    if anthropic_api_key:
+        keys["ANTHROPIC_API_KEY"] = anthropic_api_key
+    if kie_api_key:
+        keys["KIE_AI_API_KEY"] = kie_api_key
+    run_env = {**os.environ, **keys, **(env or {})}
     proc = subprocess.run(
         cmd, cwd=str(project), env=run_env,
         capture_output=True, text=True, timeout=timeout,

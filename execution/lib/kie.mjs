@@ -18,7 +18,9 @@ export function loadEnv() {
       const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/);
       if (m) {
         const v = m[2].replace(/^["']|["']$/g, "");
-        if (v) env[m[1]] = v; // non-empty .env values override process env
+        // .env only fills a key the real environment doesn't already provide
+        // (so keys passed to make_slideshow / exported env vars take priority).
+        if (v && !env[m[1]]) env[m[1]] = v;
       }
     }
   } catch {

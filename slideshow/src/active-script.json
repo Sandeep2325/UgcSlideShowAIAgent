@@ -1,0 +1,35 @@
+{
+  "jobId": "cozy-oat-milk-latte-for-fall-mornings-800374",
+  "topic": "cozy oat milk latte for fall mornings",
+  "title": "Cozy Oat Milk Latte for Fall Mornings",
+  "aspectRatio": "9:16",
+  "fps": 30,
+  "imageSize": "9:16",
+  "captionStyle": "minimal",
+  "scenes": [
+    {
+      "id": 1,
+      "caption": "POV: the first cold morning of fall hits different",
+      "imagePrompt": "A woman in her late 20s with wavy auburn shoulder-length hair, light freckles, wearing an oversized cream knit sweater, standing by a rain-streaked kitchen window in a small cozy apartment with warm wood cabinets, dried orange leaves and a small pumpkin on the sill, holding her arms wrapped around herself looking sleepy and content. Photorealistic, shot on iPhone, natural overcast window light, 35mm, shallow depth of field, film grain, candid, unposed, authentic, imperfect.",
+      "durationInFrames": 90,
+      "useProduct": false,
+      "image": "cozy-oat-milk-latte-for-fall-mornings-800374/scene-1.png"
+    },
+    {
+      "id": 2,
+      "caption": "so I make my slow oat milk latte ritual",
+      "imagePrompt": "A woman in her late 20s with wavy auburn shoulder-length hair, light freckles, wearing an oversized cream knit sweater, standing by a rain-streaked kitchen window in a small cozy apartment with warm wood cabinets, dried orange leaves and a small pumpkin on the sill, pouring frothy oat milk into a dark espresso in a speckled ceramic mug, steam rising. Photorealistic, shot on iPhone, natural overcast window light, 35mm, shallow depth of field, film grain, candid, unposed, authentic, imperfect.",
+      "durationInFrames": 90,
+      "useProduct": false,
+      "image": "cozy-oat-milk-latte-for-fall-mornings-800374/scene-2.png"
+    },
+    {
+      "id": 3,
+      "caption": "and suddenly the whole day feels gentle",
+      "imagePrompt": "A woman in her late 20s with wavy auburn shoulder-length hair, light freckles, wearing an oversized cream knit sweater, sitting on a worn linen sofa near the rain-streaked window in a small cozy apartment with warm wood cabinets, dried orange leaves and a small pumpkin nearby, cradling a speckled ceramic mug of oat milk latte with both hands close to her face, soft smile, eyes half closed. Photorealistic, shot on iPhone, natural overcast window light, 35mm, shallow depth of field, film grain, candid, unposed, authentic, imperfect.",
+      "durationInFrames": 120,
+      "useProduct": false,
+      "image": "cozy-oat-milk-latte-for-fall-mornings-800374/scene-3.png"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+.env
+node_modules/
+slideshow/node_modules/
+slideshow/out/
+slideshow/public/*/
+.tmp/*/script.json
+!.tmp/sample-glow-routine/

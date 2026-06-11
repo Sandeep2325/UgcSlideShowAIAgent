@@ -14,5 +14,5 @@ the `env=` argument to make_slideshow().
 
 from ._core import make_slideshow, runtime_dir, SlideshowError, CAPTION_STYLES
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __all__ = ["make_slideshow", "runtime_dir", "SlideshowError", "CAPTION_STYLES", "__version__"]

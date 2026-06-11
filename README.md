@@ -37,14 +37,27 @@ node slideshow-agent.mjs "kojic acid face wash for dark spots" \
 
 The agent always shows the script and **waits for your approval before spending any API credits.**
 
-## Use from Python
+## Use from Python (pip package)
 
-Import one function and call it. Under the hood it runs the Node agent (planning + images + render)
-and returns a result dict. **Node.js 18+ must be installed** wherever the Python runs (the video
-engine, Remotion, is Node-based).
+Install it like any Python package, then import one function. **Node.js 18+ must be installed** on
+the machine (the video engine, Remotion, is Node-based) — but the package ships all the Node code and
+installs its dependencies automatically on first use.
+
+```bash
+# build a wheel from this repo …
+pip install build && python -m build --wheel        # → dist/slideshowagent-1.0.0-py3-none-any.whl
+# … then install it anywhere
+pip install slideshowagent-1.0.0-py3-none-any.whl
+
+# or, from a clone of the repo (editable):
+pip install -e .
+
+# or straight from git once pushed:
+pip install "git+https://github.com/<you>/slideshowagent.git"
+```
 
 ```python
-from slideshow import make_slideshow
+from slideshowagent import make_slideshow
 
 result = make_slideshow(
     "kojic acid face wash for dark spots",
@@ -52,12 +65,22 @@ result = make_slideshow(
     captions="minimal",
     product="https://.../tube.png",   # local path or URL; shown only on product slides
     render=True,                       # render the mp4 (False = just generate + wire Studio)
+    env={"ANTHROPIC_API_KEY": "...", "KIE_AI_API_KEY": "..."},  # or set as real env vars
 )
 
 print(result["video"])    # absolute path to the .mp4
 for s in result["scenes"]:
     print(s["id"], s["caption"], s["image"])
 ```
+
+There's also a CLI: `slideshowagent "your topic" --scenes 6` (installed with the package).
+
+> First call after a wheel install copies the bundled Node runtime to `~/.slideshowagent/` and runs
+> `npm install` there (one-time, ~1 min). Override that location with `SLIDESHOWAGENT_CACHE`, or point
+> at an existing project with `SLIDESHOWAGENT_DIR`.
+
+> `slideshow.py` in the repo root is the same API for running directly from a source checkout, without
+> installing the package. Both expose `make_slideshow(...)`.
 
 `make_slideshow(topic, *, scenes=6, captions="minimal", product=None, character=None, style=None,
 render=True, project_dir=None, env=None, timeout=1800)` → returns

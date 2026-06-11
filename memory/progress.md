@@ -76,3 +76,11 @@ What was done, errors hit, tests run, results.
   Node ≥18, runs both npm installs, prompts for ANTHROPIC_API_KEY + KIE_AI_API_KEY (awk-writes .env).
   README "Install on another computer" added: zip-without-node_modules/.env transfer (or git), then
   `bash install.sh`. Syntax + key-write logic verified.
+- **2026-06-12 — pip-installable package (`slideshowagent`):** proper Python package via hatchling.
+  `pyproject.toml` + `src/slideshowagent/` (`__init__`, `_core`, `__main__`). `make_slideshow(...)`,
+  `runtime_dir()`, console script `slideshowagent`. The Node runtime (slideshow-agent.mjs, execution/,
+  architecture/, slideshow/src+config) is force-included into the wheel under `slideshowagent/_runtime/`;
+  on first wheel-run it copies to ~/.slideshowagent/ + npm-installs. Resolution order: SLIDESHOWAGENT_DIR
+  → repo (editable) → bundled cache. **Verified:** `pip install -e .` import+API+CLI+runtime_dir ✅;
+  wheel build bundles the full _runtime tree ✅. (Clean-venv wheel first-run render not re-run to save
+  credits — same subprocess path already proven end-to-end.) .gitignore updated for build artifacts.

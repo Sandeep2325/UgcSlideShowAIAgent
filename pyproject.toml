@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "slideshowagent"
+version = "1.0.0"
+description = "Generate UGC-style slideshow videos from a text topic (Claude + NanoBanana + Remotion)."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "slideshowagent" }]
+keywords = ["ugc", "slideshow", "video", "remotion", "nanobanana", "claude"]
+dependencies = []
+
+[project.scripts]
+slideshowagent = "slideshowagent.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/slideshowagent"]
+
+# Ship the Node runtime inside the wheel so `pip install` is self-contained.
+# (Node.js itself must be present on the machine; node_modules are installed on first run.)
+[tool.hatch.build.targets.wheel.force-include]
+"slideshow-agent.mjs" = "slideshowagent/_runtime/slideshow-agent.mjs"
+"package.json" = "slideshowagent/_runtime/package.json"
+"execution" = "slideshowagent/_runtime/execution"
+"architecture" = "slideshowagent/_runtime/architecture"
+"slideshow/src" = "slideshowagent/_runtime/slideshow/src"
+"slideshow/package.json" = "slideshowagent/_runtime/slideshow/package.json"
+"slideshow/tsconfig.json" = "slideshowagent/_runtime/slideshow/tsconfig.json"
+"slideshow/remotion.config.ts" = "slideshowagent/_runtime/slideshow/remotion.config.ts"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/slideshowagent",
+  "slideshow-agent.mjs",
+  "package.json",
+  "execution",
+  "architecture",
+  "slideshow/src",
+  "slideshow/package.json",
+  "slideshow/tsconfig.json",
+  "slideshow/remotion.config.ts",
+  "README.md",
+]
